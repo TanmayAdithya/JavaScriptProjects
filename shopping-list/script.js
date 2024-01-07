@@ -1,8 +1,17 @@
-const itemInput = document.getElementById('item-input');
 const shoppingList = document.getElementById('item-list');
+const itemInput = document.getElementById('item-input');
 const itemForm = document.getElementById('item-form');
 const clearBtn = document.getElementById('clear');
 const filterItems = document.getElementById('filter');
+
+function displayItems() {
+  const items = getItemsFromLocalStorage();
+  items.forEach((itemText) => {
+    addToDOM(itemText);
+  });
+
+  resetUI();
+}
 
 function clearItems() {
   while (shoppingList.firstChild) {
@@ -27,10 +36,11 @@ function removeItem(e) {
 function addToList(e) {
   e.preventDefault();
 
-  if (itemInput.value == '') {
+  if (itemInput.value === '') {
     alert('Enter something');
   } else {
-    addToDOM();
+    addToDOM(itemInput.value);
+    addToLocalStorage(itemInput.value);
   }
 
   itemInput.value = '';
@@ -62,18 +72,7 @@ function resetUI() {
   }
 }
 
-function addToDOM() {
-  let item = document.createElement('li');
-  item.innerHTML =
-    itemInput.value +
-    `<button class="remove-item btn-link text-red">
-      <i class="fa-solid fa-xmark"></i>
-    </button>`;
-  shoppingList.appendChild(item);
-  addToLocalStorage(item);
-}
-
-function addToLocalStorage(item) {
+function getItemsFromLocalStorage() {
   let itemsFromLocalStorage;
 
   if (localStorage.getItem('items') === null) {
@@ -82,7 +81,23 @@ function addToLocalStorage(item) {
     itemsFromLocalStorage = JSON.parse(localStorage.getItem('items'));
   }
 
-  itemsFromLocalStorage.push(item);
+  return itemsFromLocalStorage;
+}
+
+function addToDOM(itemInput) {
+  let item = document.createElement('li');
+  item.innerHTML =
+    itemInput +
+    `<button class="remove-item btn-link text-red">
+      <i class="fa-solid fa-xmark"></i>
+    </button>`;
+  shoppingList.appendChild(item);
+}
+
+function addToLocalStorage(itemInput) {
+  let itemsFromLocalStorage = getItemsFromLocalStorage();
+
+  itemsFromLocalStorage.push(itemInput);
   localStorage.setItem('items', JSON.stringify(itemsFromLocalStorage));
 }
 
@@ -97,5 +112,6 @@ shoppingList.addEventListener('click', removeItem);
 clearBtn.addEventListener('click', clearItems);
 itemForm.addEventListener('submit', addToList);
 filterItems.addEventListener('input', (e) => filterList(e));
+document.addEventListener('DOMContentLoaded', displayItems);
 
 resetUI();
