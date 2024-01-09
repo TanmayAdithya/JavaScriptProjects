@@ -18,7 +18,19 @@ body {
   height: 100%;
 }
 
+h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgba(255, 255, 255, 0.701);
+  font-weight: 400;
+  font-size: 2rem;
+}
+
 .timer-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1.25em;
   width: 500px;
   height: 500px;
   background: linear-gradient(
@@ -33,4 +45,21 @@ body {
   border: 1px solid #ffffff0d;
   border-radius: 18px;
   box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1);
+}
+
+.time {
+  color: rgba(255, 255, 255, 0.701);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 300;
+  font-size: 5rem;
+}
+
+.start-count {
+  padding: 0.75em 1.5em;
+  background-color: aliceblue;
+  border: 0;
+  border-radius: 24px;
+  width: fit-content;
+  font-size: 1rem;
+  cursor: pointer;
 }
