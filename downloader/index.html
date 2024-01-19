@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Download</title>
+  </head>
+  <body
+    style="
+      display: flex;
+      height: 100vh;
+      background-color: #0f0f0f;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-direction: column;
+    "
+  >
+    <img
+      id="image"
+      style="width: 1000px; height: auto; aspect-ratio: 16 / 9"
+      src="../form-validation/images/form-validation-background-2.png"
+    />
+    <button
+      id="download-btn"
+      style="
+        border: 1px solid white;
+        background-color: beige;
+        padding: 0.5em 1em;
+        border-radius: 16px;
+        cursor: pointer;
+      "
+    >
+      Download
+    </button>
+    <script>
+      document.getElementById('download-btn').addEventListener('click', () => {
+        const image = document.getElementById('image');
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+
+        canvas.width = image.width;
+        canvas.height = image.height;
+
+        context.drawImage(image, 0, 0);
+
+        // canvas.toBlob((blob) => {
+        //   const link = document.createElement('a');
+        //   const url = URL.createObjectURL(blob);
+
+        //   link.download = 'image.png';
+        //   link.href = url;
+
+        //   link.click();
+
+        //   // Clean up resources
+        //   URL.revokeObjectURL(url);
+        // }, 'image/png');
+
+        const link = document.createElement('a');
+        const dataURL = canvas.toDataURL('image/png');
+
+        link.download = 'image.png';
+        link.href = dataURL;
+
+        link.click();
+      });
+    </script>
+  </body>
+</html>
